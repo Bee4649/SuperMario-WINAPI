@@ -15,6 +15,7 @@ class CMonster :
 		float	m_MoveSpeed;
 		int		m_Dir;
 		float	m_FireTime;
+		int		m_FireCount;
 
 
 	public:

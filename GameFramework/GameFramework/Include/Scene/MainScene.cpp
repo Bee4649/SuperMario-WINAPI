@@ -13,7 +13,9 @@ CMainScene::~CMainScene()
 bool CMainScene::Init()
 {
 
-	CreateObject<CPlayer>("Player");
+	CPlayer* Player = CreateObject<CPlayer>("Player");
+
+	SetPlayer(Player);
 
 	CreateObject<CMonster>("Monster");
 

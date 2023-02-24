@@ -8,7 +8,11 @@ CMonster::CMonster()
 }
 
 CMonster::CMonster(const CMonster& Obj) :
-	CCharacter(Obj)
+	CCharacter(Obj),
+	m_MoveSpeed(Obj.m_MoveSpeed),
+	m_Dir(Obj.m_Dir),
+	m_FireTime(Obj.m_FireTime),
+	m_FireCount(Obj.m_FireCount)
 {
 }
 
@@ -21,6 +25,7 @@ bool CMonster::Init()
 	m_MoveSpeed = 300.f;
 	m_FireTime = 0.f;
 	m_Dir = 1;
+	m_FireCount = 0;
 
 
 	SetPos(900.f, 100.f);
@@ -33,7 +38,8 @@ bool CMonster::Init()
 
 void CMonster::Update(float DeltaTime)
 {
-	m_Pos.y += m_Dir * m_MoveSpeed * DeltaTime;
+	// 몬스터 이동
+	// m_Pos.y += m_Dir * m_MoveSpeed * DeltaTime;
 
 	if (m_Pos.y + (1.f - m_Pivot.y) * m_Size.y >= 720.f)
 	{
@@ -49,9 +55,13 @@ void CMonster::Update(float DeltaTime)
 
 	m_FireTime += DeltaTime;
 
-	if (m_FireTime >= 0.5f)
+	if (m_FireTime >= 2.5f)
 	{
-		m_FireTime -= 0.5f;
+		m_FireTime -= 2.5f;
+
+		++m_FireCount;
+
+		
 
 		CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet");
 	
@@ -60,7 +70,17 @@ void CMonster::Update(float DeltaTime)
 
 		Bullet->SetPos(BulletX, m_Pos.y);
 	
+		if (m_FireCount == 3)
+		{
+			m_FireCount = 0;
+
+			// 플레이어 방향으로 나갈 각도를 구한다.
+			float Angle = Bullet->GetPos().Angle(m_Scene->GetPlayer()->GetPos());
+		}
+
+
 	}
+
 }
 
 void CMonster::Render(HDC hDC, float DeltaTime)

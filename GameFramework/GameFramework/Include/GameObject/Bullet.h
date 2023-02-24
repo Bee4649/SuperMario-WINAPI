@@ -15,9 +15,10 @@ protected:
 
 private:
 	float	m_MoveSpeed;
-	int		m_Dir;
+	float		m_Angle;
 	// ÃÑ¾Ë »ç°Å¸®
 	float	m_Distance;
+	
 
 public:
 	void SetDistance(float Dist)
@@ -25,6 +26,12 @@ public:
 		m_Distance = Dist;
 	}
 
+
+	void SetAngle(float Angle)
+	{
+		m_Angle = Angle;
+
+	}
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

@@ -13,6 +13,15 @@ public:
 
 protected:
 	std::list<CSharedPtr<class CGameObject>>	m_ObjList;
+	CSharedPtr<class CGameObject>	m_Player;
+
+public:
+	class CGameObject* GetPlayer() const
+	{
+		return m_Player;
+	}
+
+	void SetPlayer(class CGameObject* Player);
 
 public:
 	bool Init();

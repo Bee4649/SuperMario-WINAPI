@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "..//Scene/Scene.h"
+#include "Bullet.h"
 
 CPlayer::CPlayer()
 {
@@ -75,6 +77,15 @@ void CPlayer::Update(float DeltaTime)
 
 		m_Pos -= Dir * 400.f * DeltaTime;
 		// m_Pos.y += 400.f * DeltaTime;
+	}
+
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet");
+
+		Bullet->SetAngle(m_GunAngle);
+
+		Bullet->SetPos(m_GunPos);
 	}
 }
 

@@ -9,6 +9,11 @@ CScene::~CScene()
 {
 }
 
+void CScene::SetPlayer(CGameObject* Player)
+{
+	m_Player = Player;
+}
+
 bool CScene::Init()
 {
     return true;
@@ -54,6 +59,7 @@ void CScene::Render(HDC hDC, float DeltaTime)
 
 	for (; iter != iterEnd;)
 	{
+		// GetActive 알아서 Scene에서 지우게 만들어 놓음.
 		if (!(*iter)->GetActive())
 		{
 			// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어

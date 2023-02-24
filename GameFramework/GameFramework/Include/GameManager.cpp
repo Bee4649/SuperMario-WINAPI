@@ -158,6 +158,7 @@ void CGameManager::Collision(float DeltaTime)
 
 void CGameManager::Render(float DeltaTime)
 {
+    // Rectangle(m_hDC, 0, 0, 1280, 720);
 
     CSceneManager::GetInst()->Render(m_hDC, DeltaTime);
     

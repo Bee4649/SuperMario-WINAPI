@@ -137,6 +137,9 @@
     <ClInclude Include="GameObject\Bullet.h">
       <Filter>02. GameObject\0.2 Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameFramework.rc">

@@ -251,9 +251,19 @@ struct Vector2
 	float Angle(const Vector2& v)	const
 	{
 		// 너비 길이
-		// float Width = v.x - x;
+		 float Width = abs(v.x - x);
 		// 높이 길이
-		// float Height = v.y - y;
+		 float Height = abs(v.y - y);
+
+		 // sqrtf : 루트 
+		 // 빗변의 길이
+		 float c = sqrtf(Width * Width + Height * Height);
+
+		 // 코사인 세타 값 :밑변값과 빗변값으로 이용해서 코사인값을 구하고
+		 float Angle = Width / c;
+		 // 세타가 나온다(아크코사인)
+		 Angle = acosf(Angle) / PI * 180.f;
+
 		return 0.f;
 	}
 };
