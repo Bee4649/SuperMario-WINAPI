@@ -39,7 +39,7 @@ bool CMonster::Init()
 void CMonster::Update(float DeltaTime)
 {
 	// 몬스터 이동
-	// m_Pos.y += m_Dir * m_MoveSpeed * DeltaTime;
+	m_Pos.y += m_Dir * m_MoveSpeed * DeltaTime;
 
 	if (m_Pos.y + (1.f - m_Pivot.y) * m_Size.y >= 720.f)
 	{
@@ -55,9 +55,9 @@ void CMonster::Update(float DeltaTime)
 
 	m_FireTime += DeltaTime;
 
-	if (m_FireTime >= 2.5f)
+	if (m_FireTime >= 0.5f)
 	{
-		m_FireTime -= 2.5f;
+		m_FireTime -= 0.5f;
 
 		++m_FireCount;
 
@@ -76,6 +76,8 @@ void CMonster::Update(float DeltaTime)
 
 			// 플레이어 방향으로 나갈 각도를 구한다.
 			float Angle = Bullet->GetPos().Angle(m_Scene->GetPlayer()->GetPos());
+			Bullet->SetAngle(Angle);
+		
 		}
 
 
