@@ -131,6 +131,8 @@ void CGameManager::Logic()
 
     float DeltaTime = m_Timer->GetDeltaTime();
 
+    m_DeltaTime = DeltaTime;
+
     Input(DeltaTime);
 
     // Scene이 교체될 경우 처음부터 다시 동작된다.

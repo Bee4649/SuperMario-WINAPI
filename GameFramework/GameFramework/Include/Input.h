@@ -4,7 +4,14 @@
 #include "SingletonMacro.h"
 #include "Ref.h"
 
-
+enum class Input_Type
+{
+	Down,
+	Push,
+	Up,
+	End
+	
+};
 
 // 함수 포인터를 이용해서 키를 등록하는 시스템을 만들것이다.
 
@@ -46,7 +53,7 @@ struct BindKey
 	bool Alt;
 	bool Shift;
 
-	std::vector<BindFunction*>	vecFunction;
+	std::vector<BindFunction*>	vecFunction[(int)Input_Type::End];
 	
 	BindKey() :
 		key(nullptr),
@@ -67,18 +74,53 @@ private:
 
 	std::unordered_map<unsigned char, KeyState*>	m_mapKeyState;
 	std::unordered_map<std::string, BindKey*>		m_mapBindKey;
+	bool	m_Ctrl;
+	bool	m_Alt;
+	bool	m_Shift;
+
+
 
 public:
 	bool Init();
 	void Update(float DeltaTime);
 
 private:
+	void UpdateMouse(float DeltaTime);
+	void UpdatekeyState(float DeltaTime);
+	void UpdateBindKey(float DeltaTime);
+
+	void SetKeyCtrl(const std::string& Name, bool Ctrl = true);
+	void SetKeyAlt(const std::string& Name, bool Alt = true);
+	void SetKeyShift(const std::string& Name, bool Shift = true);
+
 	KeyState* FindKeyState(unsigned char Key);
 	BindKey* FindBindKey(const std::string& Name);
 
 
 public:
 	bool AddBindKey(const std::string& Name, unsigned char Key);
+	
+public:
+	template <typename T>
+	void AddBindFunction(const std::string& KeyName,
+		Input_Type Type,
+		T* Object, void (T::* Func)())
+	{
+		BindKey* Key = FindBindKey(KeyName);
+
+		if (!Key)
+			return;
+
+		BindFunction* Function = new BindFunction;
+
+
+		Function->Obj = Object;
+		// 멤버함수를 등록할 때 함수주소, 객체주소를 등록해야 한다.
+		Function->func = std::bind(Func, Object);
+
+		Key->vecFunction[(int)Type].push_back(Function);
+	}
+
 
 	DECLARE_SINGLE(CInput)
 

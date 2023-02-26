@@ -22,4 +22,4 @@
 float RadianToDegree(float Radian);
 float DegreeToRadian(float Degree);
 
-
+#define	DELTA_TIME	CGameManager::GetInst()->GetDeltaTime()

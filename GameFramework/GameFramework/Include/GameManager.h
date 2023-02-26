@@ -27,6 +27,7 @@ private:
 	
 	class CTimer* m_Timer;
 	float		m_FrameLimitTime;
+	float		m_DeltaTime;
 	// class CPlayer* m_Player;
 
 	 // RECT		m_TestRC;
@@ -37,6 +38,11 @@ private:
 	// static 멤버변수로 만들어주었다.
 	static bool m_Loop;
 
+public:
+	float GetDeltaTime()	const
+	{
+		return m_DeltaTime;
+	}
 
 public:
 	bool Init(HINSTANCE hInst);

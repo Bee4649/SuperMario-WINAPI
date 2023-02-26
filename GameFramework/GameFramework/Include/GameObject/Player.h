@@ -14,14 +14,27 @@ private:
 	float	m_GunAngle;
 	float	m_GunLength;
 	Vector2 m_GunPos;
-
+	float	m_SolAngle[3];
+	// 솔방울 구체 그리기
+	float	m_SolLength;
+	float	m_SolLengthMin;
+	float	m_SolLengthMax;
+	float	m_SolRotationSpeed;
+	float	m_SolSkillDir;
+	bool	m_SolSkillOn;
+	float	m_SolSkillTime;
+	class CAurelionSol* m_Sol[3];
 
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render(HDC hDC, float DeltaTime);
 
-
+private:
+	void MoveFront();
+	void MoveBack();
+	void GunRotion();
+	void GunRotionInv();
 };
 
 
