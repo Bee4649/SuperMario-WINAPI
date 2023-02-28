@@ -32,6 +32,7 @@ bool CMonster::Init()
 	SetSize(100.f, 100.f);
 	SetPivot(0.5f, 0.5f);
 
+	SetTexture("Player");
 
 	return true;
 }
@@ -87,12 +88,14 @@ void CMonster::Update(float DeltaTime)
 
 void CMonster::Render(HDC hDC, float DeltaTime)
 {
-	Vector2 RenderLT;
+	CCharacter::Render(hDC, DeltaTime);
 
-	RenderLT = m_Pos - m_Pivot * m_Size;
+	// Vector2 RenderLT;
 
-	Rectangle(hDC, (int)RenderLT.x, (int)RenderLT.y,
-		(int)(RenderLT.x + m_Size.x), (int)(RenderLT.y + m_Size.y));
+	// RenderLT = m_Pos - m_Pivot * m_Size;
+
+	// Rectangle(hDC, (int)RenderLT.x, (int)RenderLT.y,
+	//	(int)(RenderLT.x + m_Size.x), (int)(RenderLT.y + m_Size.y));
 
 
 }

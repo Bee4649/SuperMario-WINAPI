@@ -26,4 +26,5 @@ void CCharacter::Update(float DeltaTime)
 
 void CCharacter::Render(HDC hDC, float DeltaTime)
 {
+    CGameObject::Render(hDC, DeltaTime);
 }

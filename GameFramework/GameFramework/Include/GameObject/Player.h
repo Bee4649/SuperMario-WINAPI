@@ -1,5 +1,11 @@
 #pragma once
 #include "Character.h"
+
+struct SkillCoolDownInfo
+{
+	float	CoolDown;
+	bool	CoolDownEnable;
+};
 class CPlayer :
     public CCharacter
 {
@@ -25,6 +31,8 @@ private:
 	float	m_SolSkillTime;
 	class CAurelionSol* m_Sol[3];
 
+	std::vector<SkillCoolDownInfo>	m_vecCoolDown;
+
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -33,8 +41,14 @@ public:
 private:
 	void MoveFront();
 	void MoveBack();
-	void GunRotion();
-	void GunRotionInv();
+	void GunRotation();
+	void GunRotationInv();
+	void Fire();
+	void Skill1();
+	void Skill2();
+
+
 };
 
 
+ 

@@ -35,11 +35,12 @@ struct BindFunction
 {
 	void* Obj;
 	std::function<void()>	func;
+	class CScene* Scene;
 
 	BindFunction() :
-		Obj(nullptr)
+		Obj(nullptr),
+		Scene(nullptr)
 	{
-
 	}
 };
 
@@ -54,6 +55,7 @@ struct BindKey
 	bool Shift;
 
 	std::vector<BindFunction*>	vecFunction[(int)Input_Type::End];
+	
 	
 	BindKey() :
 		key(nullptr),
@@ -104,7 +106,7 @@ public:
 	template <typename T>
 	void AddBindFunction(const std::string& KeyName,
 		Input_Type Type,
-		T* Object, void (T::* Func)())
+		T* Object, void (T::* Func)(), class CScene* Scene)
 	{
 		BindKey* Key = FindBindKey(KeyName);
 
@@ -113,10 +115,10 @@ public:
 
 		BindFunction* Function = new BindFunction;
 
-
 		Function->Obj = Object;
-		// 멤버함수를 등록할 때 함수주소, 객체주소를 등록해야 한다.
+		// 멤버함수를 등록할때 함수주소, 객체주소를 등록해야 한다.
 		Function->func = std::bind(Func, Object);
+		Function->Scene = Scene;
 
 		Key->vecFunction[(int)Type].push_back(Function);
 	}

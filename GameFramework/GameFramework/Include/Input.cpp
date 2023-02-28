@@ -28,18 +28,16 @@ CInput::~CInput()
 		{
 			for (int i = 0; i < (int)Input_Type::End; ++i)
 			{
-				size_t Size = iter->second->vecFunction[i].size();
+				size_t	Size = iter->second->vecFunction[i].size();
 
 				for (size_t j = 0; j < Size; ++j)
 				{
 					SAFE_DELETE(iter->second->vecFunction[i][j]);
 				}
-				
-			} 
-			SAFE_DELETE(iter->second);
-			
 			}
 
+			SAFE_DELETE(iter->second);
+		}
 
 		m_mapBindKey.clear();
 	}
@@ -47,10 +45,15 @@ CInput::~CInput()
 
 bool CInput::Init()
 {
-	AddBindKey("MoveFront", 'W');
-	AddBindKey("MoveBack", 'S');
 	AddBindKey("GunRotation", 'D');
 	AddBindKey("GunRotationInv", 'A');
+	AddBindKey("MoveFront", 'W');
+	AddBindKey("MoveBack", 'S');
+	AddBindKey("Fire", VK_SPACE);
+	AddBindKey("Skill1", '1');
+	AddBindKey("Skill2", '2');
+	SetKeyCtrl("Skill2");
+
 
 	m_Ctrl = false;
 	m_Alt = false;
@@ -76,48 +79,53 @@ void CInput::UpdateMouse(float DeltaTime)
 
 void CInput::UpdatekeyState(float DeltaTime)
 {
-	if (GetAsyncKeyState(VK_CONTROL) & 0X8000)//CTRL키
+	if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
 		m_Ctrl = true;
+
 	else
 		m_Ctrl = false;
 
-	if (GetAsyncKeyState(VK_MENU) & 0X8000) //ALt키
+	if (GetAsyncKeyState(VK_MENU) & 0x8000)
 		m_Alt = true;
+
 	else
 		m_Alt = false;
 
-	if (GetAsyncKeyState(VK_SHIFT) & 0X8000)//SHIFT키
+	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		m_Shift = true;
+
 	else
 		m_Shift = false;
 
 	auto	iter = m_mapKeyState.begin();
 	auto	iterEnd = m_mapKeyState.end();
 
-
 	for (; iter != iterEnd; ++iter)
 	{
-		bool KeyPush = false;
+		bool	KeyPush = false;
 
-		if (GetAsyncKeyState(iter->second->key) & 0X8000)
+		if (GetAsyncKeyState(iter->second->key) & 0x8000)
 		{
 			KeyPush = true;
 		}
-		//키를 눌렀을 경우
+
+		// 키를 눌렀을 경우
 		if (KeyPush)
 		{
 			// Down과 Push 모두 false라면 이 키를 지금 누른 것이다.
 			// 그러므로 둘다 true로 변경한다.
-			if (iter->second->Down && !iter->second->Push)
+			if (!iter->second->Down && !iter->second->Push)
 			{
 				iter->second->Down = true;
 				iter->second->Push = true;
 			}
+
 			// Down과 Push 둘중 하나라도 true라면 Down은 false가
-			// 되어야 한다. Push는 이미 위에서 true로 변경됨.
+			// 되어야 한다. Push는 이미 위에서 true로 변경되었다.
 			else
 				iter->second->Down = false;
 		}
+
 		// 키가 안눌러졌을 경우 Push가 true라면
 		// 이전 프레임에 키를 누르고 있다가 지금 떨어졌다는 것이다.
 		else if (iter->second->Push)
@@ -126,6 +134,7 @@ void CInput::UpdatekeyState(float DeltaTime)
 			iter->second->Push = false;
 			iter->second->Down = false;
 		}
+
 		else if (iter->second->Up)
 			iter->second->Up = false;
 	}
@@ -133,8 +142,8 @@ void CInput::UpdatekeyState(float DeltaTime)
 
 void CInput::UpdateBindKey(float DeltaTime)
 {
-	auto iter = m_mapBindKey.begin();
-	auto iterEnd = m_mapBindKey.end();
+	auto	iter = m_mapBindKey.begin();
+	auto	iterEnd = m_mapBindKey.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
@@ -144,12 +153,11 @@ void CInput::UpdateBindKey(float DeltaTime)
 			iter->second->Shift == m_Shift)
 		{
 			size_t	Size = iter->second->vecFunction[(int)Input_Type::Down].size();
-		
+
 			for (size_t i = 0; i < Size; ++i)
 			{
 				iter->second->vecFunction[(int)Input_Type::Down][i]->func();
 			}
-		
 		}
 
 		if (iter->second->key->Push &&
@@ -163,7 +171,6 @@ void CInput::UpdateBindKey(float DeltaTime)
 			{
 				iter->second->vecFunction[(int)Input_Type::Push][i]->func();
 			}
-
 		}
 
 		if (iter->second->key->Up &&
@@ -177,12 +184,10 @@ void CInput::UpdateBindKey(float DeltaTime)
 			{
 				iter->second->vecFunction[(int)Input_Type::Up][i]->func();
 			}
-
 		}
-
-
 	}
 }
+
 
 void CInput::SetKeyCtrl(const std::string& Name, bool Ctrl)
 {
@@ -196,7 +201,6 @@ void CInput::SetKeyCtrl(const std::string& Name, bool Ctrl)
 
 void CInput::SetKeyAlt(const std::string& Name, bool Alt)
 {
-
 	BindKey* Key = FindBindKey(Name);
 
 	if (!Key)
@@ -207,7 +211,6 @@ void CInput::SetKeyAlt(const std::string& Name, bool Alt)
 
 void CInput::SetKeyShift(const std::string& Name, bool Shift)
 {
-
 	BindKey* Key = FindBindKey(Name);
 
 	if (!Key)
@@ -224,10 +227,9 @@ KeyState* CInput::FindKeyState(unsigned char Key)
 	if (iter == m_mapKeyState.end())
 		return nullptr;
 
-	// iter ->first : Key
-	// iter ->second : value
-
-	return nullptr;
+	// iter->first : key
+	// iter->second : value
+	return iter->second;
 }
 
 BindKey* CInput::FindBindKey(const std::string& Name)
@@ -238,16 +240,15 @@ BindKey* CInput::FindBindKey(const std::string& Name)
 	if (iter == m_mapBindKey.end())
 		return nullptr;
 
-	// iter ->first : Key
-	// iter ->second : value
-
-	return nullptr;
+	// iter->first : key
+	// iter->second : value
+	return iter->second;
 }
 
 bool CInput::AddBindKey(const std::string& Name,
 	unsigned char Key)
 {
-	// 같은 이름으로 BingKey가 등록되어 있을 경우
+	// 같은 이름으로 BindKey가 등록되어 있을 경우
 	if (FindBindKey(Name))
 		return false;
 
@@ -264,14 +265,12 @@ bool CInput::AddBindKey(const std::string& Name,
 		State->key = Key;
 
 		m_mapKeyState.insert(std::make_pair(Key, State));
-
 	}
+
 	NewKey->key = State;
 	NewKey->Name = Name;
 
 	m_mapBindKey.insert(std::make_pair(Name, NewKey));
-
-
 
 	return true;
 }

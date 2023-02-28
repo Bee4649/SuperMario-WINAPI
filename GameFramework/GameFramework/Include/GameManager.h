@@ -44,6 +44,21 @@ public:
 		return m_DeltaTime;
 	}
 
+	HDC GetWindowDC()	const
+	{
+		return m_hDC;
+	}
+
+	HWND GetWindowHandle()	const
+	{
+		return m_hWnd;
+	}
+
+	HINSTANCE GetWindowInstance()	const
+	{
+		return m_hInst;
+	}
+
 public:
 	bool Init(HINSTANCE hInst);
 	int Run();

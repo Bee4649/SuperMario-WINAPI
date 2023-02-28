@@ -20,6 +20,7 @@ protected:
 	Vector2		m_Pos;
 	Vector2		m_Size;
 	Vector2		m_Pivot;
+	CSharedPtr<class CTexture>	m_Texture;
 
 public :
 	const Vector2& GetPos()	const
@@ -71,6 +72,10 @@ public:
 	{
 		m_Pivot = Pivot;
 	}
+
+public :
+	void SetTexture(const std::string& Name);
+	
 
 public :
 	virtual bool Init();

@@ -1,10 +1,12 @@
 #include "GameManager.h"
 // Icon를 사용하기 위해서 포함시킨다.
-#include "resource.h"
+#include "resource1.h"
 #include "Timer.h"
 #include "GameObject/Player.h"
 #include "Scene/SCeneManager.h"
 #include "Input.h"
+#include "Resource/ResourceManager.h"
+#include "PathManager.h"
 
 
 DEFINITION_SINGLE(CGameManager)
@@ -23,7 +25,11 @@ CGameManager::~CGameManager()
     // delete m_Player;
     CSceneManager::DestroyInst();
 
+    CPathManager::DestroyInst();
+
     CInput::DestroyInst();
+
+    CResourceManager::DestroyInst();
 
     SAFE_DELETE(m_Timer);
 
@@ -40,6 +46,14 @@ bool CGameManager::Init(HINSTANCE hInst)
 
 	// 윈도우 창을 생성하고 보여준다.
 	Create();
+
+    // 경로 관리자 초기화
+    if (!CPathManager::GetInst()->Init())
+        return false;
+
+    // 리소스 관리자 초기화
+    if (!CResourceManager::GetInst()->Init())
+        return false;
 
     // 입력관리자 초기화
     if (!CInput::GetInst()->Init())
@@ -151,6 +165,9 @@ void CGameManager::Input(float DeltaTime)
 
 bool CGameManager::Update(float DeltaTime)
 {
+    CResourceManager::GetInst()->Update();
+
+
     return CSceneManager::GetInst()->Update(DeltaTime);
 }
 

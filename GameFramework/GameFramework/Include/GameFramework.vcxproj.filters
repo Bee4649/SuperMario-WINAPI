@@ -43,6 +43,18 @@
     <Filter Include="02. GameObject\03. Aurelion Sol">
       <UniqueIdentifier>{895bab03-5915-4606-a8ba-d83af981a40b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Resource">
+      <UniqueIdentifier>{140a81bc-b367-4bd3-a288-91424c2319f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resource\01. Texture">
+      <UniqueIdentifier>{fe425f8d-f6bc-4f14-bd91-76839ed8601e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameManager\05. Path">
+      <UniqueIdentifier>{cd197785-5bdc-4337-a06b-1e18f3ca10ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Scene\01. Resource">
+      <UniqueIdentifier>{a46a4243-b221-4cbe-9421-6c81226ed52f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,6 +105,21 @@
     <ClCompile Include="GameObject\AurelionSol.cpp">
       <Filter>02. GameObject\03. Aurelion Sol</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\ResourceManager.cpp">
+      <Filter>04. Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>01. GameManager\05. Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture\TextureManager.cpp">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture\Texture.cpp">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneResource.cpp">
+      <Filter>03. Scene\01. Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -102,9 +129,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SingletonMacro.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -154,6 +178,24 @@
     </ClInclude>
     <ClInclude Include="GameObject\AurelionSol.h">
       <Filter>02. GameObject\03. Aurelion Sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ResourceManager.h">
+      <Filter>04. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>01. GameManager\05. Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture\TextureManager.h">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture\Texture.h">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneResource.h">
+      <Filter>03. Scene\01. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

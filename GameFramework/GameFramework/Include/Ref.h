@@ -23,7 +23,7 @@ protected:
 
 public:
 	void AddRef();
-	void Release();
+	int Release();
 
 public:
 
