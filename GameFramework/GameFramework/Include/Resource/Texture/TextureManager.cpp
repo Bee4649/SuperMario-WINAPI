@@ -126,7 +126,7 @@ bool CTextureManager::LoadTexture(const std::string& Name,
 
 	return true;
 }
-#else
+
 
 bool CTextureManager::LoadTextureFullPath(const std::string& Name,
 	const std::vector<std::string>& vecFullPath)
