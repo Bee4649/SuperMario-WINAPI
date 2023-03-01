@@ -3,7 +3,7 @@
 #include "../../GameManager.h"
 
 CTexture::CTexture()    :
-     (ETexture_Type::Sprite)
+    m_Type(ETexture_Type::Sprite)
 {
 }
 
@@ -71,32 +71,29 @@ bool CTexture::LoadTextureFullPath(const TCHAR* FullPath)
 #ifdef UNICODE
 
 bool CTexture::LoadTexture(const std::vector<std::wstring>& vecFileName,
-    const std::string& PathName = TEXTURE_PATH)
+    const std::string& PathName)
 {
     m_Type = ETexture_Type::Frame;
 
     const PathInfo* Path = CPathManager::GetInst()->FindPath(PathName);
 
-    std::vector<std::wstring>   vecFullPath;
+    std::vector<std::wstring>	vecFullPath;
 
-    size_t  Size = vecFileName.size();
-    
-    // 미리 개수만큼 push 해놓는 효과이다
+    size_t	Size = vecFileName.size();
+
+    // 미리 개수만큼 push 해놓는 효과이다.
     vecFullPath.resize(Size);
 
-    // 미리 배열 공간을 확보하여 꽉 찼을때 공간 재할당이
-    // 일어나는것을 방지해주는 역할을 할때 사용한다.
+    // 미리 배열 공간을 확보하여 꽉 찼을때 공간 재할당이 일어나는것을 방지해주는
+    // 역할을 할때 사용한다.
     //vecFullPath.reserve(Size);
-    
 
     for (size_t i = 0; i < Size; ++i)
     {
-
         if (Path)
             vecFullPath[i] = Path->Path;
 
         vecFullPath[i] += vecFileName[i];
-
     }
 
     return LoadTextureFullPath(vecFullPath);
