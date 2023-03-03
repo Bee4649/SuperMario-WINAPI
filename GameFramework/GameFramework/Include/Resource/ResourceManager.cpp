@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include "Texture/TextureManager.h"
+#include "Animation/AnimationManager.h"
 
 
 
@@ -7,15 +8,22 @@ DEFINITION_SINGLE(CResourceManager)
 
 CResourceManager::CResourceManager()
 {
+	
 	m_TextureManager = new CTextureManager;
 
 	m_TextureManager->Init();
+
+	m_AnimationManager = new CAnimationManager;
+
+	m_AnimationManager->Init();
 
 }
 
 CResourceManager::~CResourceManager()
 {
+	SAFE_DELETE(m_AnimationManager);
 	SAFE_DELETE(m_TextureManager);
+	
 }
 
 bool CResourceManager::Init()
@@ -71,6 +79,16 @@ bool CResourceManager::LoadTextureFullPath(const std::string& Name,
 
 #endif
 
+
+bool CResourceManager::SetColorKey(const std::string& Name, unsigned char r, unsigned char g, unsigned char b, int Index)
+{
+	return m_TextureManager->SetColorKey(Name, r, g, b, Index);
+}
+
+bool CResourceManager::SetColorKeyAll(const std::string& Name, unsigned char r, unsigned char g, unsigned char b)
+{
+	return m_TextureManager->SetColorKeyAll(Name, r, g, b);
+}
 
 CTexture* CResourceManager::FindTexture(const std::string& Name)
 {

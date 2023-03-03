@@ -160,6 +160,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Ref.cpp" />
+    <ClCompile Include="Resource\Animation\AnimationManager.cpp" />
+    <ClCompile Include="Resource\Animation\AnimationSequence.cpp" />
     <ClCompile Include="Resource\ResourceManager.cpp" />
     <ClCompile Include="Resource\Texture\Texture.cpp" />
     <ClCompile Include="Resource\Texture\TextureManager.cpp" />
@@ -184,6 +186,8 @@
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="Ref.h" />
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="Resource\Animation\AnimationManager.h" />
+    <ClInclude Include="Resource\Animation\AnimationSequence.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Resource\Texture\Texture.h" />
     <ClInclude Include="Resource\Texture\TextureManager.h" />

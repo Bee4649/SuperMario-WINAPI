@@ -55,6 +55,9 @@
     <Filter Include="03. Scene\01. Resource">
       <UniqueIdentifier>{a46a4243-b221-4cbe-9421-6c81226ed52f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Resource\02. Animation">
+      <UniqueIdentifier>{3c861721-4e11-4e4b-b1be-5512ea5d8c19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -119,6 +122,12 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneResource.cpp">
       <Filter>03. Scene\01. Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Animation\AnimationSequence.cpp">
+      <Filter>04. Resource\02. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Animation\AnimationManager.cpp">
+      <Filter>04. Resource\02. Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="Flag.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Animation\AnimationSequence.h">
+      <Filter>04. Resource\02. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Animation\AnimationManager.h">
+      <Filter>04. Resource\02. Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

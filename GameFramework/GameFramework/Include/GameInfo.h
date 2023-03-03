@@ -37,3 +37,9 @@ struct Resolution
 	int	Width;
 	int	Height;
 };
+
+struct AnimationFrameData
+{
+	Vector2 Start;
+	Vector2 End;
+};

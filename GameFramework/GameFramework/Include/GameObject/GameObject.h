@@ -93,10 +93,12 @@ public :
 		const std::string& PathName = TEXTURE_PATH);
 	void SetTextureFullPath(const std::string& Name, const std::vector<std::string>& vecFullPath);
 
-
+	 
 #endif // UNICOD
 
-
+	bool SetColorKey(unsigned char r, unsigned char g, unsigned char b,
+		int Index = 0);
+	bool SetColorKeyAll(unsigned char r, unsigned char g, unsigned char b);
 
 public :
 	virtual bool Init();
