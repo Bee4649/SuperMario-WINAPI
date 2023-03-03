@@ -7,7 +7,6 @@ class CSceneResource
 	friend class CScene;
 
 	
-
 private:
 	CSceneResource();
 	~CSceneResource();
@@ -15,6 +14,7 @@ private:
 
 private:
 	std::unordered_map<std::string, CSharedPtr<class CTexture>> m_mapTexture;
+
 
 
 public: // =============== Texture ==================

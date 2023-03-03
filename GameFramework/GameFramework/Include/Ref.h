@@ -26,6 +26,11 @@ public:
 	int Release();
 
 public:
+	int GetRefCount()	const
+	{
+		return m_RefCount;
+	}
+
 
 	bool GetEnable() const
 	{

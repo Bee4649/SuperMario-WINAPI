@@ -60,6 +60,8 @@ bool CTextureManager::LoadTextureFullPath(const std::string& Name,
 	return true;
 }
 #ifdef UNICODE
+
+
 bool CTextureManager::LoadTexture(const std::string& Name, 
 	const std::vector<std::wstring>& vecFileName, const std::string& PathName)
 {
@@ -172,7 +174,7 @@ void CTextureManager::RelaeseTexture(const std::string& Name)
 	if (iter == m_mapTexture.end())
 		return;
 		
-	if (iter->second->Release() == 0)
+	if (iter->second->GetRefCount() == 1)
 		m_mapTexture.erase(iter);
 
 }

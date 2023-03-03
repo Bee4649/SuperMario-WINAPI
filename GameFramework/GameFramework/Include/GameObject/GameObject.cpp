@@ -1,6 +1,7 @@
 #include "GameObject.h"
-#include "../Resource/ResourceManager.h"
 #include "../Resource/Texture/Texture.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneResource.h"
 
 CGameObject::CGameObject()  :
     m_Scene(nullptr)
@@ -19,13 +20,79 @@ CGameObject::CGameObject(const CGameObject& Obj)    :
 }
 
 CGameObject::~CGameObject()
-{
+{ 
 }
 
 void CGameObject::SetTexture(const std::string& Name)
 {
-    m_Texture = CResourceManager::GetInst()->FindTexture(Name);
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
 }
+
+void CGameObject::SetTexture(CTexture* Texture)
+{
+    m_Texture = Texture;
+}
+
+void CGameObject::SetTexture(const std::string& Name, const TCHAR* FileName,
+    const std::string& PathName)
+{
+    m_Scene->GetSceneResource()->LoadTexture(Name, FileName, PathName);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+void CGameObject::SetTextureFullPath(const std::string& Name,
+    const TCHAR* FullPath)
+{
+    m_Scene->GetSceneResource()->LoadTextureFullPath(Name, FullPath);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+#ifdef UNICODE
+
+ 
+void CGameObject::SetTexture(const std::string& Name,
+    const std::vector<std::wstring>& vecFileName, const std::string& PathName)
+{
+    m_Scene->GetSceneResource()->LoadTexture(Name, vecFileName, PathName);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+void CGameObject::SetTextureFullPath(const std::string& Name,
+    const std::vector<std::wstring>& vecFullPath)
+{
+    m_Scene->GetSceneResource()->LoadTextureFullPath(Name, vecFullPath);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+#else
+
+void CGameObject::SetTexture(const std::string& Name,
+    const std::vector<std::string>& vecFileName, const std::string& PathName)
+{
+    m_Scene->GetSceneResource()->LoadTexture(Name, vecFileName, PathName);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+void CGameObject::SetTextureFullPath(const std::string& Name,
+    const std::vector<std::string>& vecFullPath)
+{
+    m_Scene->GetSceneResource()->LoadTexture(Name, vecFileName);
+
+    m_Texture = m_Scene->GetSceneResource()->FindTexture(Name);
+
+}
+
+#endif 
 
 bool CGameObject::Init()
 {

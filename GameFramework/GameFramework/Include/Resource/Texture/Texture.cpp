@@ -143,7 +143,7 @@ bool CTexture::LoadTextureFullPath(const std::vector<std::wstring>& vecFullPath)
 #else
 
 bool CTexture::LoadTexture(const std::vector<std::string>& vecFileName,
-    const std::string& PathName = TEXTURE_PATH)
+    const std::string& PathName)
 {
     m_Type = ETexture_Type::Frame;
 
