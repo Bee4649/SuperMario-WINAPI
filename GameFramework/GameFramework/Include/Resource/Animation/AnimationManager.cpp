@@ -32,7 +32,7 @@ bool CAnimationManager::CreateAnimationSequence(const std::string& Name,
 	return true;
 }
 
-bool CAnimationManager::AddAnimationFram(const std::string& Name, const Vector2& Start, const Vector2& End)
+bool CAnimationManager::AddAnimationFrame(const std::string& Name, const Vector2& Start, const Vector2& End)
 {
 	CAnimationSequence* Sequence = FindAnimation(Name);
 
@@ -44,7 +44,7 @@ bool CAnimationManager::AddAnimationFram(const std::string& Name, const Vector2&
 	return true;
 }
 
-bool CAnimationManager::AddAnimationFram(const std::string& Name, 
+bool CAnimationManager::AddAnimationFrame(const std::string& Name,
 	float PosX, float PosY, float SizeX, float SizeY)
 {
 	CAnimationSequence* Sequence = FindAnimation(Name);
@@ -67,7 +67,7 @@ CAnimationSequence* CAnimationManager::FindAnimation(const std::string& Name)
 	return iter->second;
 }
 
-void CAnimationManager::RelaeseAnimation(const std::string& Name)
+void CAnimationManager::ReleaseAnimation(const std::string& Name)
 {
 	auto	iter = m_mapSequence.find(Name);
 

@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation.cpp" />
+    <ClCompile Include="Animation\AnimationInfo.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject\AurelionSol.cpp" />
@@ -172,6 +174,8 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation.h" />
+    <ClInclude Include="Animation\AnimationInfo.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />

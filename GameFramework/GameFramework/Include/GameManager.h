@@ -33,6 +33,19 @@ private:
 	float		m_DeltaTime;
 
 	Resolution	m_RS;
+
+
+	float		m_TimeScale;	// 글로벌 타임 재생 비율.(이거 해야됨)
+	
+
+
+
+
+
+
+
+
+
 	// class CPlayer* m_Player;
 
 	 // RECT		m_TestRC;

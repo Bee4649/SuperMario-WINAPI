@@ -8,6 +8,7 @@ class CAnimationSequence :
     public CRef
 {
     friend class CAnimationManager;
+    friend class CAnimationInfo;
 
 private:
     CAnimationSequence();

@@ -19,14 +19,14 @@ public:
 
 public:
 	bool CreateAnimationSequence(const std::string& Name, class CTexture* Texture);
-	bool AddAnimationFram(const std::string& Name, const Vector2& Start,
+	bool AddAnimationFrame(const std::string& Name, const Vector2& Start,
 		const Vector2& End);
-	bool AddAnimationFram(const std::string& Name, 
+	bool AddAnimationFrame(const std::string& Name,
 		float PosX, float PosY, float SizeX, float SizeY);
 
 
 	class CAnimationSequence* FindAnimation(const std::string& Name);
-	void RelaeseAnimation(const std::string& Name);
+	void ReleaseAnimation(const std::string& Name);
 
 
 
