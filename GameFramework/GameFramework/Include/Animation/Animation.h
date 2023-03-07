@@ -8,6 +8,7 @@ class CAnimation
 {
 	friend class CGameObject;
 
+
 private:
 	CAnimation();
 	~CAnimation();

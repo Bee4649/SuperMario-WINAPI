@@ -23,7 +23,7 @@ void CAnimationSequence::AddFrame(float PosX, float PosY, float SizeX, float Siz
 	AnimationFrameData Data = {};
 
 	Data.Start = Vector2(PosX,PosY);
-	Data.End = Vector2(SizeX,SizeY);
+	Data.End = Vector2(PosX + SizeX, PosY +SizeY);
 
 	m_vecFrame.push_back(Data);
 }

@@ -185,24 +185,84 @@ void CGameObject::Update(float DeltaTime)
 
 void CGameObject::Render(HDC hDC, float DeltaTime)
 {
-    if (m_Texture)
+    if (m_Animation)
     {
-        Vector2 RenderLT;
+        CAnimationInfo* Current = m_Animation->m_CurrentAnimation;
 
-        RenderLT = m_Pos - m_Pivot * m_Size;
+        const AnimationFrameData& FrameData = Current->m_Sequence->GetFrame(Current->m_Frame);
 
-        if (m_Texture->GetEnableColorKey())
-        { 
-            TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-                (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
-                0, 0, (int)m_Size.x, (int)m_Size.y, m_Texture->GetColorKey() );
+        Vector2	Size = FrameData.End - FrameData.Start;
+
+        Vector2	RenderLT;
+
+        RenderLT = m_Pos - m_Pivot * Size;
+        
+        if (Current->m_Sequence->GetTextureType() == ETexture_Type::Sprite)
+        {
+            if (Current->m_Sequence->GetTexture()->GetEnableColorKey())
+            {
+                TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetDC(),
+                    (int)FrameData.Start.x, (int)FrameData.Start.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetColorKey());
+            }
+
+            else
+            {
+                BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetDC(),
+                    (int)FrameData.Start.x, (int)FrameData.Start.y, SRCCOPY);
+            }
         }
 
         else
         {
-        BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-            (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
-                0, 0, SRCCOPY);
+            if (Current->m_Sequence->GetTexture()->GetEnableColorKey())
+            {
+                TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetDC(Current->m_Frame),
+                    (int)FrameData.Start.x, (int)FrameData.Start.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetColorKey());
+            }
+
+            else
+            {
+                BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)Size.x, (int)Size.y,
+                    Current->m_Sequence->GetTexture()->GetDC(Current->m_Frame),
+                    (int)FrameData.Start.x, (int)FrameData.Start.y, SRCCOPY);
+            }
         }
     }
+
+    else
+    {
+        if (m_Texture)
+        {
+            Vector2 RenderLT;
+
+            RenderLT = m_Pos - m_Pivot * m_Size;
+
+            if (m_Texture->GetEnableColorKey())
+            {
+                TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
+                    0, 0, (int)m_Size.x, (int)m_Size.y, m_Texture->GetColorKey());
+            }
+
+            else
+            {
+                BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                    (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
+                    0, 0, SRCCOPY);
+            }
+        }
+    }
+
+    
 }
