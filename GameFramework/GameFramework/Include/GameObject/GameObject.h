@@ -23,6 +23,12 @@ protected:
 	Vector2		m_Pivot;
 	CSharedPtr<class CTexture>	m_Texture;
 	CAnimation* m_Animation;
+	float		m_TimeScale;
+public:
+	float GetTimeScale()	const
+	{
+		return m_TimeScale;
+	}
 
 public :
 	const Vector2& GetPos()	const
@@ -42,6 +48,12 @@ public :
 	
 
 public:
+	void SetTimeScale(float Scale)
+	{
+		m_TimeScale = Scale;
+	}
+
+
 	virtual void SetPos(float x, float y)
 	{
 		m_Pos.x = x;

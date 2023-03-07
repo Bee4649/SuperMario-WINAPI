@@ -8,7 +8,8 @@
 
 CGameObject::CGameObject()  :
     m_Scene(nullptr),
-    m_Animation(nullptr)
+    m_Animation(nullptr),
+    m_TimeScale(1.f)
 {
     SetTypeID<CGameObject>();
 
@@ -19,7 +20,8 @@ CGameObject::CGameObject(const CGameObject& Obj)    :
     m_Scene(nullptr),
     m_Pos(Obj.m_Pos),
     m_Size(Obj.m_Size),
-    m_Pivot(Obj.m_Pivot)
+    m_Pivot(Obj.m_Pivot),
+    m_TimeScale(Obj.m_TimeScale)
 {
 }
 
@@ -178,7 +180,7 @@ void CGameObject::Update(float DeltaTime)
 {
 
     if (m_Animation)
-        m_Animation->Update(DeltaTime);
+        m_Animation->Update(DeltaTime * m_TimeScale);
 }
 
 void CGameObject::Render(HDC hDC, float DeltaTime)

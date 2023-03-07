@@ -82,6 +82,18 @@ public:
 		return m_hInst;
 	}
 
+	float GetTimeScale()	const
+	{
+		return m_TimeScale;
+	}
+
+public:
+	void SetTimeScale(float Scale)
+	{
+		m_TimeScale = Scale;
+	}
+
+
 public:
 	bool Init(HINSTANCE hInst);
 	int Run();

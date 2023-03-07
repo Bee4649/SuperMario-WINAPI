@@ -88,6 +88,8 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     m_hBackPrevBmp = (HBITMAP)SelectObject(m_hBackDC, m_hBackBmp);
 
+    m_TimeScale = 1.f;
+
 
     /*
     m_TestRC.left = 800;
@@ -159,7 +161,7 @@ void CGameManager::Logic()
     // 타이머를 갱신하여 델타타임 및 FPS를 구한다.
     m_Timer->Update();
 
-    float DeltaTime = m_Timer->GetDeltaTime();
+    float DeltaTime = m_Timer->GetDeltaTime() * m_TimeScale;
 
     m_DeltaTime = DeltaTime;
 

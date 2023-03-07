@@ -99,6 +99,10 @@ bool CPlayer::Init()
 
 void CPlayer::Update(float DeltaTime)
 {
+	CCharacter::Update(DeltaTime * m_TimeScale);
+
+	DeltaTime *= m_TimeScale;
+
 	size_t Size = m_vecCoolDown.size();
 
 	for (size_t i = 0; i < Size; ++i)
@@ -178,7 +182,7 @@ void CPlayer::MoveFront()
 	Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
 
-	m_Pos += Dir * 400.f * DELTA_TIME;
+	m_Pos += Dir * 400.f * DELTA_TIME * m_TimeScale;
 }
 
 void CPlayer::MoveBack()
@@ -188,18 +192,18 @@ void CPlayer::MoveBack()
 	Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
 
-	m_Pos -= Dir * 400.f * DELTA_TIME;
+	m_Pos -= Dir * 400.f * DELTA_TIME * m_TimeScale;
 
 }
 
 void CPlayer::GunRotation()
 {
-	m_GunAngle += 180.f * DELTA_TIME;
+	m_GunAngle += 180.f * DELTA_TIME * m_TimeScale;
 }
 
 void CPlayer::GunRotationInv()
 {
-	m_GunAngle -= 180.f * DELTA_TIME;
+	m_GunAngle -= 180.f * DELTA_TIME * m_TimeScale;
 }
 
 void CPlayer::Fire()
