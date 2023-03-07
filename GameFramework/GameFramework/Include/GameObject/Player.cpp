@@ -27,11 +27,11 @@ bool CPlayer::Init()
 
 
 	SetPos(100.f, 100.f);
-	SetSize(177.f, 87.f);
-	SetPivot(0.5f, 0.5f);
+	SetSize(85.f, 75.f);
+	SetPivot(0.5f, 1.f);
 
-	SetTexture("Player", TEXT("Player/Right/alert.bmp"));
-	SetColorKey(255, 0, 255);
+	// SetTexture("Player", TEXT("Player/Right/alert.bmp"));
+	// SetColorKey(255, 0, 255);
 
 	m_SolAngle[0] = 0.f;
 	m_SolAngle[1] = 120.f;
@@ -67,6 +67,11 @@ bool CPlayer::Init()
 	
 		m_Sol[i]->SetPos(Pos);
 	}
+
+	CreateAnimation();
+
+	AddAnimation("PlayerRightIdle");
+	AddAnimation("PlayerRightWalk");
 
 	CInput::GetInst()->AddBindFunction<CPlayer>("MoveFront",
 		Input_Type::Push, this, &CPlayer::MoveFront, m_Scene);

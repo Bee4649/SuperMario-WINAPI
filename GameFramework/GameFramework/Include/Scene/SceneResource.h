@@ -6,7 +6,7 @@ class CSceneResource
 {
 	friend class CScene;
 
-	
+
 private:
 	CSceneResource();
 	~CSceneResource();
@@ -78,7 +78,7 @@ public:	// ==================== Animation Sequence ====================
 		float PosX, float PosY, float SizeX, float SizeY);
 
 	class CAnimationSequence* FindAnimation(const std::string& Name);
-	
+
 
 
 

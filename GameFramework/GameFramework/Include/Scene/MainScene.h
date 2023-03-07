@@ -13,7 +13,8 @@ public:
 public:
 	bool Init();
 	
-
+private:
+	void CreateAnimationSequence();
 
 };
 

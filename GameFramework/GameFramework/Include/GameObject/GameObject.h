@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Ref.h"
+#include "../Animation/Animation.h"
 
 
 class CGameObject	:
@@ -21,7 +22,7 @@ protected:
 	Vector2		m_Size;
 	Vector2		m_Pivot;
 	CSharedPtr<class CTexture>	m_Texture;
-	class CAnimation* m_Animation;
+	CAnimation* m_Animation;
 
 public :
 	const Vector2& GetPos()	const
@@ -121,6 +122,21 @@ public :
 	virtual void Update(float DeltaTime);
 	virtual void Render(HDC hDC, float DeltaTime);
 
+
+public:
+	template <typename T>
+	void SetEndFunction(const std::string& Name, T* Obj, void(T::* Func)())
+	{
+		if (m_Animation)
+			m_Animation->SetEndFunction<T>(Name, Obj, Func);
+	}
+
+	template <typename T>
+	void AddNotify(const std::string& Name, int Frame, T* Obj, void(T::* Func)())
+	{
+		if (m_Animation)
+			m_Animation->AddNotify<T>(Name, Frame, Obj, Func);
+	}
 
 
 };

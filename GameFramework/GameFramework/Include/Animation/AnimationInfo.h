@@ -42,7 +42,7 @@ private:
 	bool	m_Loop;			// 반복해서 재생해야 하는지 여부.
 	bool	m_Reverse;		// 역재생 여부.
 	std::function<void()>	m_EndFunction;	// 애니메이션이 끝날때마다 호출 될 함수 등록.
-	std::vector<AnimationNotify>	m_vecNotify;
+	std::vector<AnimationNotify*>	m_vecNotify;
 
 public:
 	template <typename T>

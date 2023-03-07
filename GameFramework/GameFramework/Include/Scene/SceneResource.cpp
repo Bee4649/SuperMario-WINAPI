@@ -19,7 +19,7 @@ CSceneResource::~CSceneResource()
 
 		iter = m_mapTexture.erase(iter);
 		iterEnd = m_mapTexture.end();
-		
+
 
 		CResourceManager::GetInst()->RelaeseTexture(Key);
 
@@ -142,10 +142,19 @@ bool CSceneResource::SetColorKeyAll(const std::string& Name, unsigned char r, un
 
 CTexture* CSceneResource::FindTexture(const std::string& Name)
 {
-	auto iter = m_mapTexture.find(Name);
-	
-	if(iter == m_mapTexture.end())
-		return nullptr;
+	auto	iter = m_mapTexture.find(Name);
+
+	if (iter == m_mapTexture.end())
+	{
+		CTexture* Texture = CResourceManager::GetInst()->FindTexture(Name);
+
+		if (!Texture)
+			return nullptr;
+
+		m_mapTexture.insert(std::make_pair(Name, Texture));
+
+		return Texture;
+	}
 
 	return iter->second;
 }

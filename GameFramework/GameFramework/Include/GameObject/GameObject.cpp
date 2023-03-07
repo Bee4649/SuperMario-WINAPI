@@ -123,8 +123,51 @@ void CGameObject::CreateAnimation()
 {
     m_Animation = new CAnimation;
 
-   
+    m_Animation->m_Owner = this;
+    m_Animation->m_Scene = m_Scene;
 }
+
+void CGameObject::AddAnimation(const std::string& SequenceName, bool Loop,
+    float PlayTime, float PlayScale, bool Reverse)
+{
+    m_Animation->AddAnimation(SequenceName, Loop, PlayTime, PlayScale, Reverse);
+}
+
+void CGameObject::SetPlayTime(const std::string& Name, float PlayTime)
+{
+    m_Animation->SetPlayTime(Name, PlayTime);
+}
+
+void CGameObject::SetPlayScale(const std::string& Name, float PlayScale)
+{
+    m_Animation->SetPlayScale(Name, PlayScale);
+}
+
+void CGameObject::SetPlayLoop(const std::string& Name, bool Loop)
+{
+    m_Animation->SetPlayLoop(Name, Loop);
+}
+
+void CGameObject::SetPlayReverse(const std::string& Name, bool Reverse)
+{
+    m_Animation->SetPlayReverse(Name, Reverse);
+}
+
+void CGameObject::SetCurrentAnimation(std::string& Name)
+{
+    m_Animation->SetCurrentAnimation(Name);
+}
+
+void CGameObject::ChangeAnimation(const std::string& Name)
+{
+    m_Animation->ChangeAnimation(Name);
+}
+
+bool CGameObject::CheckCurrentAnimation(const std::string& Name)
+{
+    return  m_Animation->CheckCurrentAnimation(Name);
+}
+
 
 bool CGameObject::Init()
 {
@@ -133,6 +176,9 @@ bool CGameObject::Init()
 
 void CGameObject::Update(float DeltaTime)
 {
+
+    if (m_Animation)
+        m_Animation->Update(DeltaTime);
 }
 
 void CGameObject::Render(HDC hDC, float DeltaTime)

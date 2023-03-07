@@ -207,9 +207,7 @@ void CAnimation::Update(float DeltaTime)
 
     if (AnimationEnd)
     {
-        if (m_CurrentAnimationEndFunc)
-            m_CurrentAnimationEndFunc();
-
+        
         if (m_CurrentAnimation->m_Loop)
         {
             if (m_CurrentAnimation->m_Reverse)

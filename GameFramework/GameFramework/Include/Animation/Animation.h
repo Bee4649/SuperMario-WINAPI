@@ -55,9 +55,6 @@ public:
 	}
 
 
-
-
-public:
 	template <typename T>
 	void AddNotify(const std::string& Name, int Frame, T* Obj, void(T::* Func)())
 	{
@@ -69,12 +66,6 @@ public:
 
 		Info->AddNotify<T>(Frame, Obj, Func);
 
-	}
-
-	template <typename T>
-	void SetCurrentAnimationEndFunction(T* Obj, void(T::* Func)())
-	{
-		m_CurrentAnimationEndFunc = std::bind(Func, Obj);
 	}
 
 
