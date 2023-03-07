@@ -183,6 +183,8 @@ void CPlayer::MoveFront()
 
 
 	m_Pos += Dir * 400.f * DELTA_TIME * m_TimeScale;
+
+	ChangeAnimation("PlayRightWalk");
 }
 
 void CPlayer::MoveBack()
@@ -194,6 +196,7 @@ void CPlayer::MoveBack()
 
 	m_Pos -= Dir * 400.f * DELTA_TIME * m_TimeScale;
 
+	ChangeAnimation("PlayRightWalk");
 }
 
 void CPlayer::GunRotation()

@@ -28,7 +28,7 @@ CResourceManager::~CResourceManager()
 
 bool CResourceManager::Init()
 {
-	LoadTexture("Player", TEXT("koopa4.bmp"));
+	LoadTexture("Player", TEXT("/Player/alert.bmp"));
 	
 	
 
