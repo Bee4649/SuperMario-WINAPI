@@ -2,9 +2,13 @@
 #include "../Resource/Texture/Texture.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneResource.h"
+#include "../Animation/Animation.h"
+#include "../Scene/SceneManager.h"
+#include "../Resource/Animation/AnimationSequence.h"
 
 CGameObject::CGameObject()  :
-    m_Scene(nullptr)
+    m_Scene(nullptr),
+    m_Animation(nullptr)
 {
     SetTypeID<CGameObject>();
 
@@ -21,6 +25,7 @@ CGameObject::CGameObject(const CGameObject& Obj)    :
 
 CGameObject::~CGameObject()
 { 
+    SAFE_DELETE(m_Animation);
 }
 
 void CGameObject::SetTexture(const std::string& Name)
@@ -112,6 +117,13 @@ bool CGameObject::SetColorKeyAll(unsigned char r, unsigned char g, unsigned char
     m_Texture->SetColorKeyAll(r, g, b);
     
     return true;
+}
+
+void CGameObject::CreateAnimation()
+{
+    m_Animation = new CAnimation;
+
+   
 }
 
 bool CGameObject::Init()

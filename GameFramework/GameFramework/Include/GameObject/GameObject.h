@@ -21,6 +21,7 @@ protected:
 	Vector2		m_Size;
 	Vector2		m_Pivot;
 	CSharedPtr<class CTexture>	m_Texture;
+	class CAnimation* m_Animation;
 
 public :
 	const Vector2& GetPos()	const
@@ -100,9 +101,27 @@ public :
 		int Index = 0);
 	bool SetColorKeyAll(unsigned char r, unsigned char g, unsigned char b);
 
+public:
+	void CreateAnimation();
+	void AddAnimation(const std::string& SequenceName, bool Loop = true,
+		float PlayTime = 1.f, float PlayScale = 1.f,
+		bool Reverse = false);
+	void SetPlayTime(const std::string& Name, float PlayTime);
+	void SetPlayScale(const std::string& Name, float PlayScale);
+	void SetPlayLoop(const std::string& Name, bool Loop);
+	void SetPlayReverse(const std::string& Name, bool Reverse);
+	void SetCurrentAnimation(std::string& Name);
+	void ChangeAnimation(const std::string& Name);
+	bool CheckCurrentAnimation(const std::string& Name);
+
+
+
 public :
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void Render(HDC hDC, float DeltaTime);
+
+
+
 };
 

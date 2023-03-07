@@ -61,6 +61,9 @@
     <Filter Include="05. Animation">
       <UniqueIdentifier>{65d1c525-18a6-42e3-9d78-4ade235b219b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04. Back">
+      <UniqueIdentifier>{500bce33-325a-4fee-8242-c8c707220050}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>05. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BackObj.cpp">
+      <Filter>02. GameObject\04. Back</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="Animation\Animation.h">
       <Filter>05. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BackObj.h">
+      <Filter>02. GameObject\04. Back</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

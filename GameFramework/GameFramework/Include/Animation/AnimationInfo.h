@@ -34,9 +34,9 @@ public:
 
 private:
 	CSharedPtr<class CAnimationSequence>	m_Sequence;
-	int		m_Frame;	// 현재 애니메이션이 동작되는 프레임.
-	float	m_Time;		// 애니메이션 프레임을 증가시켜주기 위한 시간값.
-	float	m_FrmaeTime;	// 한 프레임이 증가하기 위한 시간.
+	int		m_Frame;		// 현재 애니메이션이 동작되는 프레임.
+	float	m_Time;			// 애니메이션 프레임을 증가시켜주기 위한 시간값.
+	float	m_FrameTime;	// 한 프레임이 증가하기 위한 시간.
 	float	m_PlayTime;		// 모션 한번이 동작되기 위한 시간.
 	float	m_PlayScale;	// 모션 한번이 동작되기 위한 시간.
 	bool	m_Loop;			// 반복해서 재생해야 하는지 여부.
@@ -52,9 +52,6 @@ public:
 	}
 
 
-
-
-public:
 	template <typename T>
 	void AddNotify(int Frame, T* Obj, void(T::* Func)())
 	{
