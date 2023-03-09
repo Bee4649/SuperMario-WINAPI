@@ -14,7 +14,6 @@ protected:
 	virtual ~CBullet();
 
 private:
-	float	m_MoveSpeed;
 	float		m_Angle;
 	// ÃÑ¾Ë »ç°Å¸®
 	float	m_Distance;

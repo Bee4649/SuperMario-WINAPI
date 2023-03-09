@@ -1,5 +1,7 @@
+
 #include "AnimationManager.h"
 #include "AnimationSequence.h"
+#include "../Texture/Texture.h"
 
 CAnimationManager::CAnimationManager()
 {
@@ -14,13 +16,13 @@ bool CAnimationManager::Init()
 	return true;
 }
 
-bool CAnimationManager::CreateAnimationSequence(const std::string& Name, 
+bool CAnimationManager::CreateAnimationSequence(const std::string& Name,
 	CTexture* Texture)
 {
 	CAnimationSequence* Sequence = FindAnimation(Name);
 
 	if (Sequence)
-		return false;
+		return true;
 
 	Sequence = new CAnimationSequence;
 
@@ -32,7 +34,8 @@ bool CAnimationManager::CreateAnimationSequence(const std::string& Name,
 	return true;
 }
 
-bool CAnimationManager::AddAnimationFrame(const std::string& Name, const Vector2& Start, const Vector2& End)
+bool CAnimationManager::AddAnimationFrame(const std::string& Name,
+	const Vector2& Start, const Vector2& End)
 {
 	CAnimationSequence* Sequence = FindAnimation(Name);
 

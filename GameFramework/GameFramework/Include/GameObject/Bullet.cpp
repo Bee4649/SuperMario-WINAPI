@@ -7,7 +7,6 @@ CBullet::CBullet()
 
 CBullet::CBullet(const CBullet& Obj) :
 	CGameObject(Obj),
-	m_MoveSpeed(Obj.m_MoveSpeed),
 	m_Angle(Obj.m_Angle),
 	m_Distance(Obj.m_Distance)
 {
@@ -34,6 +33,7 @@ bool CBullet::Init()
 
 void CBullet::Update(float DeltaTime)
 {
+	Move(m_Angle);
 
 	m_Pos.x = m_Pos.x + cosf(DegreeToRadian(m_Angle)) * m_MoveSpeed* DeltaTime;
 	m_Pos.y = m_Pos.y + sinf(DegreeToRadian(m_Angle)) * m_MoveSpeed * DeltaTime;

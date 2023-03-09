@@ -68,6 +68,11 @@ public:
 		Info->AddNotify<T>(Frame, Obj, Func);
 
 	}
+	template <typename T>
+	void SetCurrentAnimationEndFunction(T* Obj, void(T::* Func)())
+	{
+		m_CurrentAnimationEndFunc = std::bind(Func, Obj);
+	}
 
 
 };

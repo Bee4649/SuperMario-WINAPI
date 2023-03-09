@@ -11,9 +11,8 @@ class CMonster :
 		CMonster(const CMonster& Obj);
 		virtual ~CMonster();
 
-	private:
-		float	m_MoveSpeed;
-		int		m_Dir;
+private:
+		Vector2	m_Dir;
 		float	m_FireTime;
 		int		m_FireCount;
 

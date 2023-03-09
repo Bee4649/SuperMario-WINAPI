@@ -5,11 +5,13 @@
 #include "../Animation/Animation.h"
 #include "../Scene/SceneManager.h"
 #include "../Resource/Animation/AnimationSequence.h"
+#include "../GameManager.h"
 
 CGameObject::CGameObject()  :
     m_Scene(nullptr),
     m_Animation(nullptr),
-    m_TimeScale(1.f)
+    m_TimeScale(1.f),
+    m_MoveSpeed(0.f)
 {
     SetTypeID<CGameObject>();
 
@@ -170,6 +172,26 @@ bool CGameObject::CheckCurrentAnimation(const std::string& Name)
     return  m_Animation->CheckCurrentAnimation(Name);
 }
 
+void CGameObject::MoveDir(const Vector2& Dir)
+{
+    m_Pos += Dir * m_MoveSpeed * DELTA_TIME * m_TimeScale;
+}
+
+void CGameObject::Move(const Vector2& MoveValue)
+{
+    m_Pos += MoveValue * m_TimeScale;
+}
+
+void CGameObject::Move(float Angle)
+{
+    Vector2 Dir;
+    Dir.x = cosf(DegreeToRadian(Angle));
+    Dir.y = sinf(DegreeToRadian(Angle));
+
+
+    m_Pos += Dir * m_MoveSpeed * DELTA_TIME * m_TimeScale;
+}
+
 
 bool CGameObject::Init()
 {
@@ -181,6 +203,8 @@ void CGameObject::Update(float DeltaTime)
 
     if (m_Animation)
         m_Animation->Update(DeltaTime * m_TimeScale);
+
+    m_Move = m_Pos - m_PrevPos;
 }
 
 void CGameObject::Render(HDC hDC, float DeltaTime)
@@ -220,23 +244,7 @@ void CGameObject::Render(HDC hDC, float DeltaTime)
 
         else
         {
-            if (Current->m_Sequence->GetTexture()->GetEnableColorKey())
-            {
-                TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-                    (int)Size.x, (int)Size.y,
-                    Current->m_Sequence->GetTexture()->GetDC(Current->m_Frame),
-                    (int)FrameData.Start.x, (int)FrameData.Start.y,
-                    (int)Size.x, (int)Size.y,
-                    Current->m_Sequence->GetTexture()->GetColorKey());
-            }
-
-            else
-            {
-                BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-                    (int)Size.x, (int)Size.y,
-                    Current->m_Sequence->GetTexture()->GetDC(Current->m_Frame),
-                    (int)FrameData.Start.x, (int)FrameData.Start.y, SRCCOPY);
-            }
+           
         }
     }
 
@@ -250,19 +258,36 @@ void CGameObject::Render(HDC hDC, float DeltaTime)
 
             if (m_Texture->GetEnableColorKey())
             {
-                TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-                    (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
-                    0, 0, (int)m_Size.x, (int)m_Size.y, m_Texture->GetColorKey());
-            }
+                if (m_Texture->GetTextureType() == ETexture_Type::Sprite)
+                {
+                    TransparentBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                        (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
+                        0, 0, (int)m_Size.x, (int)m_Size.y, m_Texture->GetColorKey());
+                }
 
-            else
-            {
-                BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
-                    (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
-                    0, 0, SRCCOPY);
+                else
+                {
+
+
+                }
             }
+             else
+                  {
+                    if (m_Texture->GetTextureType() == ETexture_Type::Sprite)
+                    {
+                        BitBlt(hDC, (int)RenderLT.x, (int)RenderLT.y,
+                        (int)m_Size.x, (int)m_Size.y, m_Texture->GetDC(),
+                        0, 0, SRCCOPY);
+
+                    }
+                    else
+                    {
+
+                    }
+             }
+
         }
     }
 
-    
+    m_PrevPos = m_Pos;
 }

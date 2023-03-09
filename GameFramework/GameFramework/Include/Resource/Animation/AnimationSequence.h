@@ -23,6 +23,7 @@ public:
     {
         return m_Texture;
     }
+
     ETexture_Type GetTextureType()  const
     {
         return m_Texture->GetTextureType();

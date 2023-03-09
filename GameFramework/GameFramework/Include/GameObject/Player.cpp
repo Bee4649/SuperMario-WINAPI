@@ -22,6 +22,9 @@ CPlayer::~CPlayer()
 
 bool CPlayer::Init()
 {
+	CGameObject::Init();
+
+	m_MoveSpeed = 400.f;
 	m_GunAngle = 0.f;
 	m_GunLength = 70.f;
 
@@ -177,24 +180,28 @@ void CPlayer::Render(HDC hDC, float DeltaTime)
 
 void CPlayer::MoveFront()
 { 
-	Vector2 Dir;
-	Dir.x = cosf(DegreeToRadian(m_GunAngle));
-	Dir.y = sinf(DegreeToRadian(m_GunAngle));
+	Move(m_GunAngle);
+	
+	 // Vector2 Dir;
+	 // Dir.x = cosf(DegreeToRadian(m_GunAngle));
+	 // Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
 
-	m_Pos += Dir * 400.f * DELTA_TIME * m_TimeScale;
+	 // m_Pos += Dir * 400.f * DELTA_TIME * m_TimeScale;
 
 	ChangeAnimation("PlayRightWalk");
 }
 
 void CPlayer::MoveBack()
 {
-	Vector2 Dir;
-	Dir.x = cosf(DegreeToRadian(m_GunAngle));
-	Dir.y = sinf(DegreeToRadian(m_GunAngle));
+	Move(m_GunAngle + 180.f);
+	
+	// Vector2 Dir;
+	// Dir.x = cosf(DegreeToRadian(m_GunAngle));
+	// Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
 
-	m_Pos -= Dir * 400.f * DELTA_TIME * m_TimeScale;
+	// m_Pos -= Dir * 400.f * DELTA_TIME * m_TimeScale;
 
 	ChangeAnimation("PlayRightWalk");
 }

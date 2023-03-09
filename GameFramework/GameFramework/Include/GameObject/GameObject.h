@@ -18,12 +18,17 @@ protected:
 	class CScene* m_Scene;
 
 protected:
+	Vector2		m_PrevPos;
+	Vector2		m_Move;
 	Vector2		m_Pos;
 	Vector2		m_Size;
 	Vector2		m_Pivot;
 	CSharedPtr<class CTexture>	m_Texture;
 	CAnimation* m_Animation;
 	float		m_TimeScale;
+	float		m_MoveSpeed;
+
+
 public:
 	float GetTimeScale()	const
 	{
@@ -128,6 +133,11 @@ public:
 	bool CheckCurrentAnimation(const std::string& Name);
 
 
+public:
+	void MoveDir(const Vector2& Dir);
+	void Move(const Vector2& MovevValue);
+	void Move(float Angle);
+
 
 public :
 	virtual bool Init();
@@ -141,6 +151,13 @@ public:
 	{
 		if (m_Animation)
 			m_Animation->SetEndFunction<T>(Name, Obj, Func);
+	}
+
+	template <typename T>
+	void SetCurrentAnimationEndFunction(T* Obj, void(T::* Func)())
+	{
+		if (m_Animation)
+			m_Animation->SetCurrentAnimationEndFunction<T>(Obj, Func);
 	}
 
 	template <typename T>
