@@ -12,7 +12,7 @@ public:
 		virtual ~CScene();
 		
 private:
-	class CSceneResource* m_Resource; 
+	class CSceneResource* m_Resource;
 
 protected:
 	std::list<CSharedPtr<class CGameObject>>	m_ObjList;
@@ -32,9 +32,10 @@ public:
 	void SetPlayer(class CGameObject* Player);
 
 public:
-	bool Init();
-	void Update(float DeltaTime); 
-	void Render(HDC hDC, float DeltaTime);
+	virtual bool Init();
+	virtual void Update(float DeltaTime);
+	virtual void PostUpdate(float DeltaTime);
+	virtual void Render(HDC hDC, float DeltaTime);
 
 public:
 	template <typename T>

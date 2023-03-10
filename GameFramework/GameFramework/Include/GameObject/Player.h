@@ -30,12 +30,18 @@ private:
 	bool	m_SolSkillOn;
 	float	m_SolSkillTime;
 	class CAurelionSol* m_Sol[3];
+	int		m_PlayerDir;
+	std::vector<std::string>	m_vecSequenceKey[2];
+
+	bool	m_Attack; 
+
 
 	std::vector<SkillCoolDownInfo>	m_vecCoolDown;
 
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
+	virtual void PostUpdate(float DeltaTime);
 	virtual void Render(HDC hDC, float DeltaTime);
 
 private:

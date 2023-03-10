@@ -42,7 +42,7 @@ void CMonster::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 
-	Move(m_Dir);
+	MoveDir(m_Dir);
 
 	// 몬스터 이동
 	m_Pos += m_Dir * m_MoveSpeed * DeltaTime;
@@ -56,7 +56,7 @@ void CMonster::Update(float DeltaTime)
 	else if (m_Pos.y - m_Pivot.y * m_Size.y <= 0.f)
 	{
 		m_Pos.y = m_Pivot.y * m_Size.y;
-		m_Dir *= 1;
+		m_Dir *= -1;
 	}
 
 	m_FireTime += DeltaTime;
@@ -89,6 +89,11 @@ void CMonster::Update(float DeltaTime)
 
 	}
 
+}
+
+void CMonster::PostUpdate(float DeltaTime)
+{
+	CCharacter::PostUpdate(DeltaTime);
 }
 
 void CMonster::Render(HDC hDC, float DeltaTime)

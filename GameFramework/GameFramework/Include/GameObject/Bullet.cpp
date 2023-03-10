@@ -18,7 +18,7 @@ CBullet::~CBullet()
 
 bool CBullet::Init()
 {
-	m_MoveSpeed = 700.f;
+	m_MoveSpeed = 350.f;
 	m_Distance = 600.f;
 	m_Angle = 180.0f;
 	
@@ -33,6 +33,7 @@ bool CBullet::Init()
 
 void CBullet::Update(float DeltaTime)
 {
+	CGameObject::Update(DeltaTime);
 	Move(m_Angle);
 
 	m_Pos.x = m_Pos.x + cosf(DegreeToRadian(m_Angle)) * m_MoveSpeed* DeltaTime;
@@ -43,6 +44,11 @@ void CBullet::Update(float DeltaTime)
 	if (m_Distance <= 0.f)
 		SetActive(false);
 	
+}
+
+void CBullet::PostUpdate(float DeltaTime)
+{
+	CGameObject::PostUpdate(DeltaTime);
 }
 
 void CBullet::Render(HDC hDC, float DeltaTime)

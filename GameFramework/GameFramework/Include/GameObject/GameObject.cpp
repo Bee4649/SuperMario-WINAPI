@@ -204,6 +204,10 @@ void CGameObject::Update(float DeltaTime)
     if (m_Animation)
         m_Animation->Update(DeltaTime * m_TimeScale);
 
+}
+
+void CGameObject::PostUpdate(float DeltaTime)
+{
     m_Move = m_Pos - m_PrevPos;
 }
 

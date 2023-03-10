@@ -75,6 +75,21 @@ bool CPlayer::Init()
 
 	AddAnimation("PlayerRightIdle");
 	AddAnimation("PlayerRightWalk");
+	AddAnimation("PlayerRightAttack",false);
+	AddAnimation("PlayerLeftIdle");
+	AddAnimation("PlayerLeftWalk");
+	AddAnimation("PlayerLefAttack",false);
+
+	m_vecSequenceKey[0].push_back("PlayerRightIdle");
+	m_vecSequenceKey[0].push_back("PlayerRightWalk");
+	m_vecSequenceKey[0].push_back("PlayerRightAttack");
+
+	m_vecSequenceKey[1].push_back("PlayerLeftIdle");
+	m_vecSequenceKey[1].push_back("PlayerLeftWalk");
+	m_vecSequenceKey[1].push_back("PlayerLeftAttack");
+
+	// 오른쪽 보고 있음.
+	m_PlayerDir = 1;
 
 	CInput::GetInst()->AddBindFunction<CPlayer>("MoveFront",
 		Input_Type::Push, this, &CPlayer::MoveFront, m_Scene);
@@ -168,6 +183,35 @@ void CPlayer::Update(float DeltaTime)
 	}
 }
 
+void CPlayer::PostUpdate(float DeltaTime)
+{
+	CCharacter::PostUpdate(DeltaTime);
+
+	if (m_PlayerDir == 1)
+	{
+		// 0일 경우라면 오른쪽으로 이동중 멈췄다는 것이다.
+		if (m_Move.x < 0.f)
+			m_PlayerDir = -1;
+	}
+	else
+	{
+		if (m_Move.x > 0.f)
+			m_PlayerDir = 1;
+	}
+
+	int AnimDirIndex = 0;
+
+	if (m_PlayerDir == -1)
+		AnimDirIndex = 1;
+
+	if (m_Move.x != 0.f || m_Move.y != 0.f)
+	{
+		ChangeAnimation(m_vecSequenceKey[AnimDirIndex][1]);
+	}
+	else
+		ChangeAnimation(m_vecSequenceKey[AnimDirIndex][0]);
+}
+
 
 void CPlayer::Render(HDC hDC, float DeltaTime)
 {
@@ -180,44 +224,49 @@ void CPlayer::Render(HDC hDC, float DeltaTime)
 
 void CPlayer::MoveFront()
 { 
-	Move(m_GunAngle);
-	
+	//Move(m_GunAngle);
+	MoveDir(Vector2(0.f, -1.f));
 	 // Vector2 Dir;
 	 // Dir.x = cosf(DegreeToRadian(m_GunAngle));
 	 // Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
-
 	 // m_Pos += Dir * 400.f * DELTA_TIME * m_TimeScale;
 
-	ChangeAnimation("PlayRightWalk");
 }
 
 void CPlayer::MoveBack()
 {
-	Move(m_GunAngle + 180.f);
-	
+	//Move(m_GunAngle + 180.f);
+	MoveDir(Vector2(0.f, 1.f));
 	// Vector2 Dir;
 	// Dir.x = cosf(DegreeToRadian(m_GunAngle));
 	// Dir.y = sinf(DegreeToRadian(m_GunAngle));
 
-
 	// m_Pos -= Dir * 400.f * DELTA_TIME * m_TimeScale;
 
-	ChangeAnimation("PlayRightWalk");
 }
 
 void CPlayer::GunRotation()
 {
-	m_GunAngle += 180.f * DELTA_TIME * m_TimeScale;
+	// m_GunAngle += 180.f * DELTA_TIME * m_TimeScale;
+	MoveDir(Vector2(1.f, 0.f));
 }
 
 void CPlayer::GunRotationInv()
 {
-	m_GunAngle -= 180.f * DELTA_TIME * m_TimeScale;
+	// m_GunAngle -= 180.f * DELTA_TIME * m_TimeScale;
+	MoveDir(Vector2(-1.f, 0.f));
 }
 
 void CPlayer::Fire()
 {
+	int AnimDirIndex = 0;
+
+	if (m_PlayerDir == -1)
+		AnimDirIndex = 1;
+	
+	ChangeAnimation(m_vecSequenceKey[AnimDirIndex][2]);
+
 	CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet");
 
 	Bullet->SetAngle(m_GunAngle);

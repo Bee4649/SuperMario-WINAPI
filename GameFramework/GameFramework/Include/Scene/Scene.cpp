@@ -58,6 +58,33 @@ void CScene::Update(float DeltaTime)
 	}
 }
 
+void CScene::PostUpdate(float DeltaTime)
+{
+	auto iter = m_ObjList.begin();
+	auto iterEnd = m_ObjList.end();
+
+	for (; iter != iterEnd;)
+	{
+		if (!(*iter)->GetActive())
+		{
+			// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
+			// 카운트가 감소한다.
+			iter = m_ObjList.erase(iter);
+			iterEnd = m_ObjList.end();
+			continue;
+		}
+		else if (!(*iter)->GetEnable())
+		{
+			++iter;
+			continue;
+		}
+		(*iter)->PostUpdate(DeltaTime);
+
+		++iter;
+
+	}
+}
+
 void CScene::Render(HDC hDC, float DeltaTime)
 {
 
