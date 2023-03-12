@@ -52,8 +52,11 @@ private:
 	void Fire();
 	void Skill1();
 	void Skill2();
+	
 
-
+private:
+	void AttackEnd();
+	void Attack();
 };
 
 

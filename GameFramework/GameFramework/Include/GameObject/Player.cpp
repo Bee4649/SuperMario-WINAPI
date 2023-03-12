@@ -75,12 +75,18 @@ bool CPlayer::Init()
 
 	AddAnimation("PlayerRightIdle");
 	AddAnimation("PlayerRightWalk");
-	AddAnimation("PlayerRightAttack",false);
+	AddAnimation("PlayerRightAttack", false, 0.3f);
 	AddAnimation("PlayerLeftIdle");
 	AddAnimation("PlayerLeftWalk");
-	AddAnimation("PlayerLefAttack",false);
+	AddAnimation("PlayerLefAttack",false, 0.3f);
 
-	m_vecSequenceKey[0].push_back("PlayerRightIdle");
+	SetEndFunction<CPlayer>("PlayerRightAttack", this, &CPlayer::AttackEnd);
+	SetEndFunction<CPlayer>("PlayerLefAttack", this, &CPlayer::AttackEnd);
+
+	AddNotify<CPlayer>("PlayerRightAttack", 2, this, &CPlayer::Attack);
+	AddNotify<CPlayer>("PlayerLefAttack", 2, this, &CPlayer::Attack);
+
+	m_vecSequenceKey[0].push_back("PlayerRightIdle"); 
 	m_vecSequenceKey[0].push_back("PlayerRightWalk");
 	m_vecSequenceKey[0].push_back("PlayerRightAttack");
 
@@ -90,6 +96,9 @@ bool CPlayer::Init()
 
 	// 오른쪽 보고 있음.
 	m_PlayerDir = 1;
+
+	// 공격중이 아닐 때.
+	m_Attack = false;
 
 	CInput::GetInst()->AddBindFunction<CPlayer>("MoveFront",
 		Input_Type::Push, this, &CPlayer::MoveFront, m_Scene);
@@ -206,9 +215,11 @@ void CPlayer::PostUpdate(float DeltaTime)
 
 	if (m_Move.x != 0.f || m_Move.y != 0.f)
 	{
+		// 이동을 할 겨9ㅇ우 공격중이더라도 공격을 취소한다.
+		m_Attack = false;
 		ChangeAnimation(m_vecSequenceKey[AnimDirIndex][1]);
 	}
-	else
+	else if(!m_Attack)
 		ChangeAnimation(m_vecSequenceKey[AnimDirIndex][0]);
 }
 
@@ -260,6 +271,11 @@ void CPlayer::GunRotationInv()
 
 void CPlayer::Fire()
 {
+	if (m_Attack)
+		return;
+
+	m_Attack = true;
+
 	int AnimDirIndex = 0;
 
 	if (m_PlayerDir == -1)
@@ -267,11 +283,7 @@ void CPlayer::Fire()
 	
 	ChangeAnimation(m_vecSequenceKey[AnimDirIndex][2]);
 
-	CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet");
-
-	Bullet->SetAngle(m_GunAngle);
-
-	Bullet->SetPos(m_GunPos);
+	
 }
 
 void CPlayer::Skill1()
@@ -304,4 +316,18 @@ void CPlayer::Skill2()
 
 	m_SolSkillTime = 0.f;
 	m_SolSkillDir = 1.f;
+}
+
+void CPlayer::AttackEnd()
+{
+	m_Attack = false;
+}
+
+void CPlayer::Attack()
+{
+	CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet");
+
+	Bullet->SetAngle(m_GunAngle);
+
+	Bullet->SetPos(m_GunPos);
 }
