@@ -6,12 +6,14 @@
 #include "../Scene/SceneManager.h"
 #include "../Resource/Animation/AnimationSequence.h"
 #include "../GameManager.h"
+#include "../Scene/Camera.h"
 
 CGameObject::CGameObject()  :
     m_Scene(nullptr),
     m_Animation(nullptr),
     m_TimeScale(1.f),
-    m_MoveSpeed(0.f)
+    m_MoveSpeed(0.f),
+    m_RenderLayer(ERender_Layer::Default)
 {
     SetTypeID<CGameObject>();
 
@@ -209,10 +211,24 @@ void CGameObject::Update(float DeltaTime)
 void CGameObject::PostUpdate(float DeltaTime)
 {
     m_Move = m_Pos - m_PrevPos;
+
+    // 애니메이션이 동작될 경우 이미지 크기로 사이즈를 결정하기 떄문에 여기에서 사이즈를
+    // 다시 구해주도록 한다.
+    if (m_Animation)
+    {
+        CAnimationInfo* Current = m_Animation->m_CurrentAnimation;
+
+        const AnimationFrameData& FrameData = Current->m_Sequence->GetFrame(Current->m_Frame);
+
+        m_Size = FrameData.End - FrameData.Start;
+    }
 }
 
 void CGameObject::Render(HDC hDC, float DeltaTime)
 {
+    Vector2 Pos = m_Pos - m_Scene->GetCamera()->GetPos();
+
+
     if (m_Animation)
     {
         CAnimationInfo* Current = m_Animation->m_CurrentAnimation;
@@ -223,7 +239,8 @@ void CGameObject::Render(HDC hDC, float DeltaTime)
 
         Vector2	RenderLT;
 
-        RenderLT = m_Pos - m_Pivot * Size;
+        RenderLT = Pos - m_Pivot * Size;
+
         
         if (Current->m_Sequence->GetTextureType() == ETexture_Type::Sprite)
         {
@@ -258,7 +275,7 @@ void CGameObject::Render(HDC hDC, float DeltaTime)
         {
             Vector2 RenderLT;
 
-            RenderLT = m_Pos - m_Pivot * m_Size;
+            RenderLT = Pos - m_Pivot * m_Size;
 
             if (m_Texture->GetEnableColorKey())
             {

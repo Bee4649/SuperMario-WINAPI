@@ -1,19 +1,24 @@
 #include "Scene.h"
 #include "../GameObject/GameObject.h"
 #include "SceneResource.h"
+#include "Camera.h"
 
 CScene::CScene()
 {
 	m_Resource = new CSceneResource;
-
+	m_Camera = new CCamera;
 
 }
 
 CScene::~CScene()
 {
-	m_ObjList.clear();
+	for (int i = 0; i < (int)ERender_Layer::Max; ++i)
+	{ 
+		m_ObjList[i].clear();
+	}
 
-	SAFE_DELETE(m_Resource);
+	SAFE_DELETE(m_Camera);
+	SAFE_DELETE(m_Resource);	
 }
 
 void CScene::SetPlayer(CGameObject* Player)
@@ -33,83 +38,109 @@ void CScene::Update(float DeltaTime)
 
 	// auto : 선언과 동시에 무조건 대입을 해주어야 한다.
 	// 대입된 타입으로 타입이 선언된다.
-	auto iter = m_ObjList.begin();
-	auto iterEnd = m_ObjList.end();
+	for (int i = 0; i < (int)ERender_Layer::Max; ++i)
+	{
+		auto iter = m_ObjList[i].begin();
+		auto iterEnd = m_ObjList[i].end();
 
-	for (; iter != iterEnd;)
-	{ 
-		if (!(*iter)->GetActive())
+		for (; iter != iterEnd;)
 		{
-			// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
-			// 카운트가 감소한다.
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
-		}
-		else if(!(*iter)->GetEnable())
-		{
+			if (!(*iter)->GetActive())
+			{
+				// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
+				// 카운트가 감소한다.
+				iter = m_ObjList[i].erase(iter);
+				iterEnd = m_ObjList[i].end();
+				continue;
+			}
+			else if (!(*iter)->GetEnable())
+			{
+				++iter;
+				continue;
+			}
+			(*iter)->Update(DeltaTime);
+
 			++iter;
-			continue;
-		}
-		(*iter)->Update(DeltaTime);
-		
-		++iter;
 
+		}
 	}
+
+	m_Camera->Update(DeltaTime);
 }
 
 void CScene::PostUpdate(float DeltaTime)
 {
-	auto iter = m_ObjList.begin();
-	auto iterEnd = m_ObjList.end();
+	for (int i = 0; i < (int)ERender_Layer::Max; ++i)
+	{
+	auto iter = m_ObjList[i].begin();
+	auto iterEnd = m_ObjList[i].end();
 
 	for (; iter != iterEnd;)
-	{
-		if (!(*iter)->GetActive())
 		{
+		if (!(*iter)->GetActive())
+			{
 			// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
 			// 카운트가 감소한다.
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
+			iter = m_ObjList[i].erase(iter);
+			iterEnd = m_ObjList[i].end();
 			continue;
-		}
+			}
 		else if (!(*iter)->GetEnable())
-		{
+			{
 			++iter;
 			continue;
-		}
+			}
 		(*iter)->PostUpdate(DeltaTime);
 
 		++iter;
 
+		}
 	}
+
 }
 
 void CScene::Render(HDC hDC, float DeltaTime)
 {
-
-	auto iter = m_ObjList.begin();
-	auto iterEnd = m_ObjList.end();
-
-	for (; iter != iterEnd;)
+	// 출력 목록을 정렬한다.(Y소팅)
+	for (int i = 0; i < (int)ERender_Layer::Max; ++i)
 	{
-		// GetActive 알아서 Scene에서 지우게 만들어 놓음.
-		if (!(*iter)->GetActive())
+		m_ObjList[i].sort(CScene::SortY);
+
+
+		auto iter = m_ObjList[i].begin();
+		auto iterEnd = m_ObjList[i].end();
+
+		for (; iter != iterEnd;)
 		{
-			// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
-			// 카운트가 감소한다.
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
-		}
-		else if (!(*iter)->GetEnable())
-		{
+			// GetActive 알아서 Scene에서 지우게 만들어 놓음.
+			if (!(*iter)->GetActive())
+			{
+				// 리스트에서 제거하는 순간 SharedPtr의 소멸자가 호출되어
+				// 카운트가 감소한다.
+				iter = m_ObjList[i].erase(iter);
+				iterEnd = m_ObjList[i].end();
+				continue;
+			}
+			else if (!(*iter)->GetEnable())
+			{
+				++iter;
+				continue;
+			}
+			(*iter)->Render(hDC, DeltaTime);
+
 			++iter;
-			continue;
+
 		}
-		(*iter)->Render(hDC, DeltaTime);
-
-		++iter;
-
 	}
+
+}
+
+bool CScene::SortY(const CSharedPtr<class CGameObject>& Src, const CSharedPtr<class CGameObject>& Dest)
+{
+	// 발밑 기준으로 정렬을 진행해야 하기 떄문에 발밑의 Y를 구해준다.
+	float SrcY = Src->GetPos().y + (1.f - Src->GetPivot().y) * Src->GetSize().y;
+	float DestY = Dest->GetPos().y + (1.f - Dest->GetPivot().y) * Dest->GetSize().y;
+
+
+	return SrcY < DestY;
 }

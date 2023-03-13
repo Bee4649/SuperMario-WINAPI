@@ -3,6 +3,7 @@
 #include "../GameObject/Monster.h"
 #include "../GameObject/BackObj.h"
 #include "SceneResource.h"
+#include "Camera.h"
 
 CMainScene::CMainScene()
 {
@@ -16,11 +17,17 @@ bool CMainScene::Init()
 {
 	CreateAnimationSequence();
 
+	GetCamera()->SetResolution(1280.f, 720.f);
+	GetCamera()->SetWorldResolution(1500.f, 1200.f);
+	GetCamera()->SetTargetPivot(0.5f, 0.5f);
+
 	CreateObject<CBackObj>("BackObj");
 
 	CPlayer* Player = CreateObject<CPlayer>("Player");
 
 	SetPlayer(Player);
+
+	GetCamera()->SetTarget(Player);
 
 	CreateObject<CMonster>("Monster");
 

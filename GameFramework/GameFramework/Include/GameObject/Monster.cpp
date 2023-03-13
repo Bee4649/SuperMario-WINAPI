@@ -42,10 +42,10 @@ void CMonster::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 
-	MoveDir(m_Dir);
+	// MoveDir(m_Dir);
 
 	// 몬스터 이동
-	m_Pos += m_Dir * m_MoveSpeed * DeltaTime;
+	// m_Pos += m_Dir * m_MoveSpeed * DeltaTime;
 
 	if (m_Pos.y + (1.f - m_Pivot.y) * m_Size.y >= 720.f)
 	{

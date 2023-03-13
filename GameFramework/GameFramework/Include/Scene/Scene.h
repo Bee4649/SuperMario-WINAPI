@@ -13,10 +13,18 @@ public:
 		
 private:
 	class CSceneResource* m_Resource;
+	class CCamera* m_Camera;
 
 protected:
-	std::list<CSharedPtr<class CGameObject>>	m_ObjList;
+	std::list<CSharedPtr<class CGameObject>>	m_ObjList[(int)ERender_Layer::Max];
 	CSharedPtr<class CGameObject>	m_Player;
+
+public:
+	class CCamera* GetCamera()	const
+	{
+		return m_Camera;
+	}
+
 
 public:
 	class CSceneResource* GetSceneResource()	const
@@ -52,9 +60,16 @@ public:
 			return nullptr;
 		}
 
-		m_ObjList.push_back((CGameObject*)Obj);
-		
+
+		m_ObjList[(int)Obj->GetRenderLayer()].push_back((CGameObject*)Obj);
+
 		return Obj;
 	}
-};
 
+
+private:
+	static bool SortY(const CSharedPtr<class CGameObject>& Src, const CSharedPtr<class CGameObject>& Dest);
+
+
+
+};

@@ -18,6 +18,7 @@ protected:
 	class CScene* m_Scene;
 
 protected:
+	ERender_Layer	m_RenderLayer;
 	Vector2		m_PrevPos;
 	Vector2		m_Move;
 	Vector2		m_Pos;
@@ -30,6 +31,10 @@ protected:
 
 
 public:
+	ERender_Layer GetRenderLayer()	const
+	{
+		return m_RenderLayer;
+	}
 	float GetTimeScale()	const
 	{
 		return m_TimeScale;
